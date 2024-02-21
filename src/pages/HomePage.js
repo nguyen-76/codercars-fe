@@ -23,13 +23,13 @@ const HomePage = () => {
   };
   const handleClickEdit = (id) => {
     setMode("edit");
-    setSelectedCar(cars.find((car) => String(car._id) === id));
+    setSelectedCar(cars.find((cars) => String(cars._id) === id));
     setOpenForm(true);
   };
 
   const handleClickDelete = (id) => {
     setOpenConfirm(true);
-    setSelectedCar(cars.find((car) => String(car._id) === id));
+    setSelectedCar(cars.find((cars) => String(cars._id) === id));
   };
   const handleDelete = async () => {
     try {
@@ -75,14 +75,14 @@ const HomePage = () => {
       ),
     },
   ];
-  const rows = cars.map((car) => ({
-    id: car._id,
-    name: car.make + " " + car.model,
-    size: car.size,
-    style: car.style,
-    transmission_type: car.transmission_type,
-    price: car.price,
-    release_date: car.release_date,
+  const rows = cars.map((cars) => ({
+    id: cars._id,
+    name: cars.make + " " + cars.model,
+    size: cars.size,
+    style: cars.style,
+    transmission_type: cars.transmission_type,
+    price: cars.price,
+    release_date: cars.release_date,
   }));
 
   const getData = useCallback(async () => {
