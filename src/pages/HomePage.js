@@ -78,10 +78,10 @@ const HomePage = () => {
   const rows = cars?.map((car) => ({
     id: car._id,
     name: car.Make + " " + car.Model,
-    size: car.Size,
-    style: car.Style,
-    transmission_type: car.Transmission_Type,
-    price: car.Price,
+    size: car.Vehicle_size,
+    style: car.Vehicle_style,
+    transmission_type: car.Transmission_type,
+    price: car.MSRP,
     release_date: car.Year,
   }));
 
