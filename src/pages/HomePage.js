@@ -77,12 +77,12 @@ const HomePage = () => {
   ];
   const rows = cars?.map((car) => ({
     id: car._id,
-    name: car.make + " " + car.model,
-    size: car.size,
-    style: car.style,
-    transmission_type: car.transmission_type,
-    price: car.price,
-    release_date: car.release_date,
+    name: car.Make + " " + car.Model,
+    size: car.Size,
+    style: car.Style,
+    transmission_type: car.Transmission_Type,
+    price: car.Price,
+    release_date: car.Year,
   }));
 
   const getData = useCallback(async () => {
