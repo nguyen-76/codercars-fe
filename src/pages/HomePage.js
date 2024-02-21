@@ -84,6 +84,7 @@ const HomePage = () => {
     price: car.price,
     release_date: car.release_date,
   }));
+  console.log(rows);
 
   const getData = useCallback(async () => {
     const res = await apiService.get(`/cars?page=${page}`);
