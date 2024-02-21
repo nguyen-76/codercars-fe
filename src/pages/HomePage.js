@@ -90,7 +90,7 @@ const HomePage = () => {
     setCars(res.cars);
     setTotalPages(res.total);
   }, [page]);
-
+  console.log(getData);
   useEffect(() => {
     getData();
   }, [getData]);
