@@ -41,14 +41,14 @@ export default function FormModal({
   const [form, setForm] = useState(initial_form);
   const [errors, setErrors] = useState({});
   const schema = Joi.object({
-    make: Joi.string().required(),
-    model: Joi.string().required(),
-    release_date: Joi.number()
+    Make: Joi.string().required(),
+    Model: Joi.string().required(),
+    Year: Joi.number()
       .integer()
       .min(1900)
       .max(new Date().getFullYear())
       .required(),
-    transmission_type: Joi.string()
+    "Transmission Type": Joi.string()
       .valid(
         "MANUAL",
         "AUTOMATIC",
@@ -57,9 +57,11 @@ export default function FormModal({
         "UNKNOWN"
       )
       .required(),
-    price: Joi.number().integer().min(1000).required(),
-    size: Joi.string().valid("Compact", "Midsize", "Large").required(),
-    style: Joi.string().required(),
+    Price: Joi.number().integer().min(1000).required(),
+    "Vehicle Size": Joi.string()
+      .valid("Compact", "Midsize", "Large")
+      .required(),
+    "Vehicle Style": Joi.string().required(),
   }).options({ stripUnknown: true, abortEarly: false });
 
   const handleChange = (e) => {
@@ -94,7 +96,6 @@ export default function FormModal({
     } else {
       if (mode === "create") handleCreate(validate.value);
       else handleEdit(validate.value);
-      // handleClose();
     }
   };
   useEffect(() => {
