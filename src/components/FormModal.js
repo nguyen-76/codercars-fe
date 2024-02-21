@@ -41,14 +41,14 @@ export default function FormModal({
   const [form, setForm] = useState(initial_form);
   const [errors, setErrors] = useState({});
   const schema = Joi.object({
-    Make: Joi.string().required(),
-    Model: Joi.string().required(),
-    Year: Joi.number()
+    make: Joi.string().required(),
+    model: Joi.string().required(),
+    release_date: Joi.number()
       .integer()
       .min(1900)
       .max(new Date().getFullYear())
       .required(),
-    "Transmission Type": Joi.string()
+    transmission_type: Joi.string()
       .valid(
         "MANUAL",
         "AUTOMATIC",
@@ -57,11 +57,9 @@ export default function FormModal({
         "UNKNOWN"
       )
       .required(),
-    Price: Joi.number().integer().min(1000).required(),
-    "Vehicle Size": Joi.string()
-      .valid("Compact", "Midsize", "Large")
-      .required(),
-    "Vehicle Style": Joi.string().required(),
+    price: Joi.number().integer().min(1000).required(),
+    size: Joi.string().valid("Compact", "Midsize", "Large").required(),
+    style: Joi.string().required(),
   }).options({ stripUnknown: true, abortEarly: false });
 
   const handleChange = (e) => {
@@ -70,7 +68,9 @@ export default function FormModal({
   };
   const handleEdit = async (newForm) => {
     try {
-      await apiService.put(`/cars/${selectedCar?._id}`, { ...newForm });
+      await apiService.put(`/car/${selectedCar?._id}`, {
+        ...newForm,
+      });
       refreshData();
     } catch (err) {
       console.log(err);
@@ -78,9 +78,8 @@ export default function FormModal({
   };
   const handleCreate = async (newForm) => {
     try {
-      const res = await apiService.post("/cars", { ...newForm });
+      await apiService.post("/car", { ...newForm });
       refreshData();
-      console.log(res);
     } catch (err) {
       console.log(err.message);
     }
@@ -96,6 +95,7 @@ export default function FormModal({
     } else {
       if (mode === "create") handleCreate(validate.value);
       else handleEdit(validate.value);
+      handleClose();
     }
   };
   useEffect(() => {
@@ -103,7 +103,9 @@ export default function FormModal({
       setErrors({});
       setForm(selectedCar);
     } else setForm(initial_form);
-  }, [selectedCar]);
+
+    // eslint-disable-next-line
+  }, [selectedCar?._id]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} key={modalKey}>
@@ -215,7 +217,7 @@ export default function FormModal({
               <DatePicker
                 views={["year"]}
                 label="Year"
-                value={moment(form.release_date?.toString()).format("YYYY")}
+                value={moment(form.release_date.toString()).format("YYYY")}
                 error={errors.release_date}
                 onChange={(newValue) => {
                   setForm({ ...form, release_date: moment(newValue).year() });
