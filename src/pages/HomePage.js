@@ -78,9 +78,9 @@ const HomePage = () => {
   const rows = cars?.map((car) => ({
     id: car._id,
     name: car.Make + " " + car.Model,
-    size: car.Vehicle_size,
-    style: car.Vehicle_style,
-    transmission_type: car.Transmission_type,
+    size: car["Vehicle Size"],
+    style: car["Vehicle Style"],
+    transmission_type: car["Transmission Type"],
     price: car.MSRP,
     release_date: car.Year,
   }));
