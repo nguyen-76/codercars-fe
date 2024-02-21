@@ -23,7 +23,7 @@ import moment from "moment";
 const initial_form = {
   make: "",
   model: "",
-  year: "",
+  release_date: "",
   transmission_type: "",
   price: 0,
   size: "",
@@ -43,7 +43,7 @@ export default function FormModal({
   const schema = Joi.object({
     make: Joi.string().required(),
     model: Joi.string().required(),
-    year: Joi.number()
+    release_date: Joi.number()
       .integer()
       .min(1900)
       .max(new Date().getFullYear())
@@ -68,7 +68,7 @@ export default function FormModal({
   };
   const handleEdit = async (newForm) => {
     try {
-      await apiService.put(`/car/${selectedCar?._id}`, { ...newForm });
+      await apiService.put(`/cars/${selectedCar?._id}`, { ...newForm });
       refreshData();
     } catch (err) {
       console.log(err);
@@ -76,7 +76,7 @@ export default function FormModal({
   };
   const handleCreate = async (newForm) => {
     try {
-      const res = await apiService.post("/car", { ...newForm });
+      const res = await apiService.post("/cars", { ...newForm });
       refreshData();
       console.log(res);
     } catch (err) {
@@ -214,15 +214,17 @@ export default function FormModal({
               <DatePicker
                 views={["year"]}
                 label="Year"
-                value={moment(form.year.toString()).format("YYYY")}
-                error={errors.year}
+                value={moment(form.release_date?.toString()).format("YYYY")}
+                error={errors.release_date}
                 onChange={(newValue) => {
-                  setForm({ ...form, year: moment(newValue).year() });
+                  setForm({ ...form, release_date: moment(newValue).year() });
                 }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    helperText={errors.year ? errors.year : null}
+                    helperText={
+                      errors.release_date ? errors.release_date : null
+                    }
                   />
                 )}
               />
