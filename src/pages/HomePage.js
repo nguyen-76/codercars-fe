@@ -40,7 +40,11 @@ const HomePage = () => {
     }
   };
   const name =
-    selectedCar?.year + " " + selectedCar?.make + " " + selectedCar?.model;
+    selectedCar?.release_date +
+    " " +
+    selectedCar?.make +
+    " " +
+    selectedCar?.model;
   const columns = [
     { field: "name", headerName: "Name", flex: 3, minWidth: 120 },
     { field: "style", headerName: "Style", flex: 1, minWidth: 120 },
@@ -52,7 +56,7 @@ const HomePage = () => {
       minWidth: 120,
     },
     { field: "price", headerName: "Price", flex: 1, minWidth: 80 },
-    { field: "year", headerName: "Year", flex: 1, minWidth: 80 },
+    { field: "release_date", headerName: "Year", flex: 1, minWidth: 80 },
     {
       field: "id",
       headerName: "Edit/Delete",
@@ -71,20 +75,20 @@ const HomePage = () => {
       ),
     },
   ];
-  const rows = cars?.map((car) => ({
+  const rows = cars.map((car) => ({
     id: car._id,
     name: car.make + " " + car.model,
     size: car.size,
     style: car.style,
     transmission_type: car.transmission_type,
     price: car.price,
-    year: car.year,
+    release_date: car.release_date,
   }));
 
   const getData = useCallback(async () => {
     const res = await apiService.get(`/cars?page=${page}`);
-    setCars(res.data);
-    setTotalPages(res.total);
+    setCars(res.data.cars);
+    setTotalPages(res.data.total);
   }, [page]);
 
   useEffect(() => {
