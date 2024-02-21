@@ -29,7 +29,7 @@ const HomePage = () => {
 
   const handleClickDelete = (id) => {
     setOpenConfirm(true);
-    setSelectedCar(cars.find((car) => car._id === id));
+    setSelectedCar(cars.find((car) => String(car._id) === id));
   };
   const handleDelete = async () => {
     try {
