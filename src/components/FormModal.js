@@ -68,9 +68,7 @@ export default function FormModal({
   };
   const handleEdit = async (newForm) => {
     try {
-      await apiService.put(`/car/${selectedCar?._id}`, {
-        ...newForm,
-      });
+      await apiService.put(`/cars/${selectedCar?._id}`, { ...newForm });
       refreshData();
     } catch (err) {
       console.log(err);
@@ -78,8 +76,9 @@ export default function FormModal({
   };
   const handleCreate = async (newForm) => {
     try {
-      await apiService.post("/car", { ...newForm });
+      const res = await apiService.post("/cars", { ...newForm });
       refreshData();
+      console.log(res);
     } catch (err) {
       console.log(err.message);
     }
@@ -95,7 +94,7 @@ export default function FormModal({
     } else {
       if (mode === "create") handleCreate(validate.value);
       else handleEdit(validate.value);
-      handleClose();
+      // handleClose();
     }
   };
   useEffect(() => {
@@ -103,9 +102,7 @@ export default function FormModal({
       setErrors({});
       setForm(selectedCar);
     } else setForm(initial_form);
-
-    // eslint-disable-next-line
-  }, [selectedCar?._id]);
+  }, [selectedCar]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} key={modalKey}>
